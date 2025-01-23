@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
     # third party apps
     "django_celery_beat",
     "allauth",
@@ -185,12 +186,17 @@ SOCIAL_AUTH_GITHUB_SECRET = os.environ.get("GITHUB_CLIENT_SECRET")
 
 SOCIALACCOUNT_PROVIDERS = {
     "github": {
-        "SCOPE": ["user", "repo"],
-        "AUTH_PARAMS": {"scope": "user"},
+        "SCOPE": ["read:user", "user:email"],
     }
 }
 
 
+SOCIALACCOUNT_ADAPTER = "tracker.adapter.CustomSocialAccountAdapter"
+SOCIALACCOUNT_LOGIN_ON_GET = True
+SOCIALACCOUNT_STORE_TOKENS = True
+SOCIALACCOUNT_QUERY_EMAIL = True
+
+ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
